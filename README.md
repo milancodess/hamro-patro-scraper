@@ -1,10 +1,10 @@
-# HamroPatro
+# hamro-patro-scraper
 
-HamroPatro is an npm package for scraping Nepali date, time, and daily horoscope data from [Hamro Patro](https://www.hamropatro.com/). It provides a simple API for retrieving this information programmatically or via a command-line interface.
+hamro-patro-scraper is an npm package for scraping Nepali date, time, and daily horoscope data from [Hamro Patro](https://www.hamropatro.com/). It provides a simple API for retrieving this information programmatically or via a command-line interface.
 
 ## Installation
 
-You can install HamroPatro globally to use the CLI or as a dependency in your Node.js project.
+You can install hamro-patro-scraper globally to use the CLI or as a dependency in your Node.js project.
 
 ### Install Globally
 
@@ -83,8 +83,6 @@ You can also use HamroPatro in your Node.js applications. Here’s how:
 Returns an object with the following properties:
 
 - `nepaliDate`: The current Nepali date.
-- `day`: The day of the week in Nepali.
-- `panchang`: The Panchang (Hindu calendar details).
 - `currentTime`: The current time in Nepali time.
 - `englishDate`: The current date in the Gregorian calendar.
 
@@ -102,12 +100,12 @@ This package is licensed under the Apache.
 
 ## Contributing
 
-If you'd like to contribute to HamroPatro, please fork the repository and submit a pull request. Contributions, bug reports, and feature requests are welcome!
+If you'd like to contribute to hamro-patro-scraper, please fork the repository and submit a pull request. Contributions, bug reports, and feature requests are welcome!
 
 ## Contact
 
-For any questions or issues, please open an issue on the [GitHub repository](https://github.com/milancodess/HamroPatro).
+For any questions or issues, please open an issue on the [GitHub repository](https://github.com/milancodess/hamro-patro-scraper).
 
 ---
 
-**HamroPatro** is maintained by [Milan Bhandari](https://github.com/milancodess).
+**hamro-patro-scraper** is maintained by [Milan Bhandari](https://github.com/milancodess).
