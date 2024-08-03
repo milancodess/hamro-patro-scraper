@@ -98,7 +98,7 @@ Returns an array of horoscope objects with the following properties for each ras
 
 ## License
 
-This package is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+This package is licensed under the Apache.
 
 ## Contributing
 
