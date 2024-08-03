@@ -11,7 +11,7 @@ You can install HamroPatro globally to use the CLI or as a dependency in your No
 To install HamroPatro globally, use:
 
 ```bash
-npm install -g HamroPatro
+npm install -g hamro-patro-scraper
 ```
 
 ### Install as a Dependency
@@ -19,7 +19,7 @@ npm install -g HamroPatro
 To add HamroPatro to your project, run:
 
 ```bash
-npm install HamroPatro
+npm install hamro-patro-scraper
 ```
 
 ## Usage
@@ -47,7 +47,7 @@ You can also use HamroPatro in your Node.js applications. Here’s how:
 1. **Require the Package:**
 
    ```javascript
-   const { hamroPatro, getHoroscope } = require('HamroPatro');
+   const { hamroPatro, getHoroscope } = require('hamro-patro-scraper');
    ```
 
 2. **Fetch Nepali Date and Time:**
