@@ -7,15 +7,11 @@ const hamroPatro = async () => {
     const $ = cheerio.load(data);
 
     const nepaliDate = $('#top .container12 .column4 .date .nep').text().trim().replace('Nepali Date:', '');
-    const day = $('#top .container12 .column4 .date').text().trim().split('Day: ')[1]?.split('\n')[0]?.trim() || 'Day not found';
-    const panchang = $('#top .container12 .column4 .date').text().trim().split('Panchang: ')[1]?.split('\n')[0]?.trim() || 'Panchang not found';
     const currentTime = $('#top .container12 .column4 .time span').text().trim().replace('Current time:', '');
     const englishDate = $('#top .container12 .column4 .time .eng').text().trim().replace('English date:', '');
 
     return {
       nepaliDate: nepaliDate || 'Nepali Date not found',
-      day: day || 'Day not found',
-      panchang: panchang || 'Panchang not found',
       currentTime: currentTime || 'Current time not found',
       englishDate: englishDate || 'English date not found'
     };
