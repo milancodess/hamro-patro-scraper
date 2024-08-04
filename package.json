@@ -1,16 +1,22 @@
 {
   "name": "hamro-patro-scraper",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A package to scrape Nepali date, time, and daily horoscope from Hamro Patro.",
   "main": "index.js",
-  "bin": {
-    "HamroPatro": "./cli.js"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/milancodess/hamro-patro-scraper.git"
+  },
+  "keywords": ["scraper", "hamro patro","hamro-patrp-scraper"],
   "author": "Milan Bhandari",
   "license": "Apache",
+  "bugs": {
+    "url": "https://github.com/milancodess/hamro-patro-scraper/issues"
+  },
+  "homepage": "https://github.com/milancodess/hamro-patro-scraper#readme",
   "dependencies": {
     "axios": "^1.6.7",
     "cheerio": "^1.0.0-rc.12"
