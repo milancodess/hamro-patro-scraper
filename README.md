@@ -155,4 +155,3 @@ For any questions or issues, please open an issue on the [GitHub repository](htt
 ---
 
 **hamro-patro-scraper** is maintained by [Milan Bhandari](https://github.com/milancodess).
-```
