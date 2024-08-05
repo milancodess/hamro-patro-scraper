@@ -8,14 +8,16 @@ const [,, command] = process.argv;
   try {
     if (command === 'datetime') {
       const result = await hamroPatro();
-      console.log('Nepali Date and Time:', result);
+      console.log('Nepali Date and Time:', JSON.stringify(result, null, 2));
     } else if (command === 'horoscope') {
       const result = await getHoroscope();
-      console.log('Daily Horoscope:', result);
+      console.log('Daily Horoscope:', JSON.stringify(result, null, 2));
     } else if (command === 'gold') {
-      await getGoldPrices();
+      const result = await getGoldPrices();
+      console.log(JSON.stringify(result, null, 2));
     } else if (command === 'forex') {
-      await getExchangeRates();
+      const result = await getExchangeRates();
+      console.log(JSON.stringify(result, null, 2));
     } else {
       console.log('Usage:');
       console.log('  datetime  - Fetch Nepali date and time');
