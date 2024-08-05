@@ -90,10 +90,11 @@ You can also use `hamro-patro-scraper` in your Node.js applications. Here’s ho
 
 4. **Fetch Gold Prices:**
 
-   ```javascript
+ ```javascript
    (async () => {
      try {
-       await getGoldPrices(); // This function logs data directly
+       const data = await getGoldPrices();
+       console.log(JSON.stringify(data, null, 2));
      } catch (error) {
        console.error('Error fetching gold prices:', error.message);
      }
@@ -102,14 +103,15 @@ You can also use `hamro-patro-scraper` in your Node.js applications. Here’s ho
 
 5. **Fetch Exchange Rates:**
 
-   ```javascript
+  ```javascript
    (async () => {
-     try {
-       await getExchangeRates(); // This function logs data directly
-     } catch (error) {
-       console.error('Error fetching exchange rates:', error.message);
-     }
-   })();
+  try {
+    const data = await getExchangeRates();
+    console.log(JSON.stringify(data, null, 2));
+  } catch (error) {
+    console.error('Error fetching exchange rates:', error.message);
+  }
+})();
    ```
 
 ## API
