@@ -13,17 +13,29 @@ const getExchangeRates = async () => {
       forexTexts.push($(elem).text().trim());
     });
 
-    forexTexts.splice(0, 3);
+    forexTexts.splice(0, 3); // Removing the first set of titles
 
-    console.log('Forex Texts:');
+    const exchangeRates = [];
     for (let i = 0; i < forexTexts.length; i += 3) {
       const currency = forexTexts[i];
       const buyRate = forexTexts[i + 1];
       const sellRate = forexTexts[i + 2];
-      console.log(`${(i / 3) + 1}. ${currency} - Buy: ${buyRate} - Sell: ${sellRate}`);
+      exchangeRates.push({
+        id: (i / 3) + 1,
+        currency: currency,
+        buyRate: buyRate,
+        sellRate: sellRate
+      });
     }
+
+    const result = {
+      exchangeRates: exchangeRates
+    };
+
+    return result;
   } catch (error) {
     console.error('Error fetching the page:', error);
+    throw error;
   }
 };
 
