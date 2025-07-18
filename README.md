@@ -37,7 +37,7 @@ Once installed globally, you can use the CLI to fetch Nepali date/time, daily ho
 - **Fetch Daily Horoscope:**
 
   ```bash
-  HamroPatro horoscope
+  HamroPatro horoscope (daily | weekly | monthly | yearly)
   ```
 
 - **Fetch Gold Prices:**
@@ -59,7 +59,12 @@ You can also use `hamro-patro-scraper` in your Node.js applications. Here’s ho
 1. **Require the Package:**
 
    ```javascript
-   const { hamroPatro, getHoroscope, getGoldPrices, getExchangeRates } = require('hamro-patro-scraper');
+   const {
+     hamroPatro,
+     getHoroscope,
+     getGoldPrices,
+     getExchangeRates,
+   } = require("hamro-patro-scraper");
    ```
 
 2. **Fetch Nepali Date and Time:**
@@ -68,9 +73,9 @@ You can also use `hamro-patro-scraper` in your Node.js applications. Here’s ho
    (async () => {
      try {
        const dateTime = await hamroPatro();
-       console.log('Nepali Date and Time:', dateTime);
+       console.log("Nepali Date and Time:", dateTime);
      } catch (error) {
-       console.error('Error fetching Nepali date and time:', error.message);
+       console.error("Error fetching Nepali date and time:", error.message);
      }
    })();
    ```
@@ -78,41 +83,56 @@ You can also use `hamro-patro-scraper` in your Node.js applications. Here’s ho
 3. **Fetch Daily Horoscope:**
 
    ```javascript
-   (async () => {
+   const types = ["daily", "weekly", "monthly", "yearly"];
+   const fetchHoroscope = async (type = "daily") => {
      try {
-       const horoscope = await getHoroscope();
-       console.log('Daily Horoscope:', horoscope);
+       const horoscope = await getHoroscope(type);
+       console.log(
+         `${type.charAt(0).toUpperCase() + type.slice(1)} Horoscope:`
+       );
+       console.log(JSON.stringify(horoscope, null, 2));
+       console.log("-----------------------");
      } catch (error) {
-       console.error('Error fetching daily horoscope:', error.message);
+       console.error(`Error fetching ${type} horoscope:`, error.message);
+     }
+   };
+
+   // Example: fetch daily horoscope (default)
+   fetchHoroscope();
+
+   // Or fetch all types:
+   (async () => {
+     for (const type of types) {
+       await fetchHoroscope(type);
      }
    })();
    ```
 
 4. **Fetch Gold Prices:**
 
- ```javascript
-   (async () => {
-     try {
-       const data = await getGoldPrices();
-       console.log(JSON.stringify(data, null, 2));
-     } catch (error) {
-       console.error('Error fetching gold prices:', error.message);
-     }
-   })();
-   ```
+```javascript
+(async () => {
+  try {
+    const data = await getGoldPrices();
+    console.log(JSON.stringify(data, null, 2));
+  } catch (error) {
+    console.error("Error fetching gold prices:", error.message);
+  }
+})();
+```
 
 5. **Fetch Exchange Rates:**
 
-  ```javascript
-   (async () => {
+```javascript
+(async () => {
   try {
     const data = await getExchangeRates();
     console.log(JSON.stringify(data, null, 2));
   } catch (error) {
-    console.error('Error fetching exchange rates:', error.message);
+    console.error("Error fetching exchange rates:", error.message);
   }
 })();
-   ```
+```
 
 ## API
 
