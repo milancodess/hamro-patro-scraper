@@ -1,6 +1,6 @@
 {
   "name": "hamro-patro-scraper",
-  "version": "1.1.5",
+  "version": "1.2.0",
   "description": "A package to scrape Nepali date, time, daily horoscope, gold and silver rates and exchange rates from Hamro Patro.",
   "main": "index.js",
   "bin": {
@@ -13,7 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/milancodess/hamro-patro-scraper.git"
   },
-  "keywords": ["scraper", "hamro patro","hamro-patro-scraper", "nepali patro", "nepali-patro"],
+  "keywords": ["scraper", "hamro patro","hamro-patro-scraper", "nepali patro", "nepali-patro", "nepali calendar", "nepali date", "nepali time", "nepali horoscope", "nepali gold rate", "nepali silver rate", "nepali exchange rate"],
   "author": "Milan Bhandari",
   "license": "Apache",
   "bugs": {

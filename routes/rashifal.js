@@ -1,34 +1,60 @@
-const axios = require('axios');
-const cheerio = require('cheerio');
+const axios = require("axios");
+const cheerio = require("cheerio");
 
-const getHoroscope = async () => {
-  const url = 'https://www.hamropatro.com/rashifal';
+const rashiNames = [
+  "मेष",
+  "वृष",
+  "मिथुन",
+  "कर्कट",
+  "सिंह",
+  "कन्या",
+  "तुला",
+  "वृश्चिक",
+  "धनु",
+  "मकर",
+  "कुम्भ",
+  "मीन",
+];
+
+const getHoroscope = async (type = "daily") => {
+  let url;
+
+  if (type === "daily") {
+    url = "https://www.hamropatro.com/rashifal";
+  } else if (type === "weekly") {
+    url = "https://www.hamropatro.com/rashifal/weekly";
+  } else if (type === "monthly") {
+    url = "https://www.hamropatro.com/rashifal/monthly";
+  } else if (type === "yearly") {
+    url = "https://www.hamropatro.com/rashifal/yearly";
+  } else {
+    throw new Error(
+      "Invalid horoscope type. Use daily, weekly, monthly, or yearly."
+    );
+  }
 
   try {
     const { data } = await axios.get(url);
     const $ = cheerio.load(data);
 
-    const descElements = $('.desc p');
-
-    const rashiNames = [
-      "मेष", "वृष", "मिथुन", "कर्कट",
-      "सिंह", "कन्या", "तुला", "वृश्चिक",
-      "धनु", "मकर", "कुम्भ", "मीन"
-    ];
-
+    const descElements = $(".desc p");
     const results = [];
+
     descElements.each((index, element) => {
       if (index < rashiNames.length) {
-        const rashi = index + 1;
-        const name = rashiNames[index];
-        const text = $(element).text();
-        results.push({ rashi, name, text });
+        results.push({
+          rashi: index + 1,
+          name: rashiNames[index],
+          text: $(element).text().trim(),
+        });
       }
     });
 
     return results;
   } catch (error) {
-    throw new Error(`Failed to retrieve the horoscope. Error: ${error.message}`);
+    throw new Error(
+      `Failed to retrieve the horoscope. Error: ${error.message}`
+    );
   }
 };
 
