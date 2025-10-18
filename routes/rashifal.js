@@ -46,6 +46,9 @@ const getHoroscope = async (type = "daily") => {
           rashi: index + 1,
           name: rashiNames[index],
           text: $(element).text().trim(),
+          image: `https://www.hamropatro.com/images/dummy/ic_sodiac_${
+            index + 1
+          }.png`,
         });
       }
     });
