@@ -34,10 +34,10 @@ Once installed globally, you can use the CLI to fetch Nepali date/time, daily ho
   HamroPatro datetime
   ```
 
-- **Fetch Daily Horoscope:**
+- **Fetch Daily, Weekly, Monthly, Yearly Rashifal:**
 
   ```bash
-  HamroPatro horoscope (daily | weekly | monthly | yearly)
+  HamroPatro rashifal (daily | weekly | monthly | yearly)
   ```
 
 - **Fetch Gold Prices:**
