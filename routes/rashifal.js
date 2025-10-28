@@ -16,7 +16,7 @@ const rashiNames = [
   "मीन",
 ];
 
-const getHoroscope = async (type = "daily") => {
+const getRashifal = async (type = "daily") => {
   let url;
 
   if (type === "daily") {
@@ -61,4 +61,4 @@ const getHoroscope = async (type = "daily") => {
   }
 };
 
-module.exports = getHoroscope;
+module.exports = getRashifal;

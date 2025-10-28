@@ -61,7 +61,7 @@ You can also use `hamro-patro-scraper` in your Node.js applications. Here’s ho
    ```javascript
    const {
      hamroPatro,
-     getHoroscope,
+     getRashifal,
      getGoldPrices,
      getExchangeRates,
    } = require("hamro-patro-scraper");
@@ -86,7 +86,7 @@ You can also use `hamro-patro-scraper` in your Node.js applications. Here’s ho
    const types = ["daily", "weekly", "monthly", "yearly"];
    const fetchHoroscope = async (type = "daily") => {
      try {
-       const horoscope = await getHoroscope(type);
+       const horoscope = await getRashifal(type);
        console.log(
          `${type.charAt(0).toUpperCase() + type.slice(1)} Horoscope:`
        );
@@ -144,7 +144,7 @@ Returns an object with the following properties:
 - `currentTime`: The current time in Nepali time.
 - `englishDate`: The current date in the Gregorian calendar.
 
-### `getHoroscope()`
+### `getRashifal()`
 
 Returns an array of horoscope objects with the following properties for each rashi (zodiac sign):
 

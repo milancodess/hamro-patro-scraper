@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const {
   hamroPatro,
-  getHoroscope,
+  getRashifal,
   getGoldPrices,
   getExchangeRates,
 } = require("./index");
@@ -17,9 +17,9 @@ const [, , command, arg] = process.argv;
         break;
       }
 
-      case "horoscope": {
+      case "rashifal": {
         const type = arg || "daily"; // default to daily
-        const result = await getHoroscope(type);
+        const result = await getRashifal(type);
         console.log(
           `${type.charAt(0).toUpperCase() + type.slice(1)} Horoscope:`
         );
@@ -43,7 +43,7 @@ const [, , command, arg] = process.argv;
         console.log("Usage:");
         console.log("  datetime              - Fetch Nepali date and time");
         console.log(
-          "  horoscope [type]      - Fetch horoscope (daily | weekly | monthly | yearly)"
+          "  rashifal [type]      - Fetch rashifal (daily | weekly | monthly | yearly)"
         );
         console.log("  gold                  - Fetch gold prices");
         console.log("  forex                 - Fetch exchange rates");

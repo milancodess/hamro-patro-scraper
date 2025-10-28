@@ -1,19 +1,19 @@
-const axios = require('axios');
-const cheerio = require('cheerio');
+const axios = require("axios");
+const cheerio = require("cheerio");
 
-const url = 'https://www.hamropatro.com/gold';
+const url = "https://www.hamropatro.com/gold";
 
 const getGoldPrices = async () => {
   try {
     const { data } = await axios.get(url);
     const $ = cheerio.load(data);
 
-    const articleTitle = $('h2.articleTitle span').text();
-    const updatedAt = $('p > b').text();
-    const desText = $('p.des_text').text();
+    const articleTitle = $("h2.articleTitle span").text();
+    const updatedAt = $("p > b").text();
+    const desText = $("p.des_text").text();
 
     const goldSilverTexts = [];
-    $('ul.gold-silver > li').each((i, elem) => {
+    $("ul.gold-silver > li").each((i, elem) => {
       goldSilverTexts.push($(elem).text().trim());
     });
 
@@ -21,13 +21,13 @@ const getGoldPrices = async () => {
     for (let i = 0; i < goldSilverTexts.length; i += 2) {
       if (i + 1 < goldSilverTexts.length) {
         goldPrices.push({
-          id: (i / 2) + 1,
-          price: `${goldSilverTexts[i]} - ${goldSilverTexts[i + 1]}`
+          id: i / 2 + 1,
+          price: `${goldSilverTexts[i]} - ${goldSilverTexts[i + 1]}`,
         });
       } else {
         goldPrices.push({
-          id: (i / 2) + 1,
-          price: goldSilverTexts[i]
+          id: i / 2 + 1,
+          price: goldSilverTexts[i],
         });
       }
     }
@@ -36,12 +36,12 @@ const getGoldPrices = async () => {
       title: articleTitle,
       updatedAt: updatedAt,
       description: desText,
-      goldPrices: goldPrices
+      goldPrices: goldPrices,
     };
 
-    return result; 
+    return result;
   } catch (error) {
-    console.error('Error fetching the page:', error);
+    console.error("Error fetching the page:", error);
     throw error;
   }
 };

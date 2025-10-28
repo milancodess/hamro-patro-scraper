@@ -1,6 +1,6 @@
 {
   "name": "hamro-patro-scraper",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "A package to scrape Nepali date, time, daily horoscope, gold and silver rates and exchange rates from Hamro Patro.",
   "main": "index.js",
   "bin": {
@@ -22,7 +22,7 @@
     "nepali calendar",
     "nepali date",
     "nepali time",
-    "nepali horoscope",
+    "nepali rashifal",
     "nepali gold rate",
     "nepali silver rate",
     "nepali exchange rate"
