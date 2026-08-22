@@ -1,64 +1,41 @@
-const axios = require("axios");
+"use strict";
+
 const cheerio = require("cheerio");
+const { cleanText, fetchPage } = require("./scraperUtils");
 
-const rashiNames = [
-  "मेष",
-  "वृष",
-  "मिथुन",
-  "कर्कट",
-  "सिंह",
-  "कन्या",
-  "तुला",
-  "वृश्चिक",
-  "धनु",
-  "मकर",
-  "कुम्भ",
-  "मीन",
-];
+const PATHS = {
+  daily: "/rashifal",
+  weekly: "/rashifal/weekly",
+  monthly: "/rashifal/monthly",
+  yearly: "/rashifal/yearly",
+};
 
-const getRashifal = async (type = "daily") => {
-  let url;
-
-  if (type === "daily") {
-    url = "https://www.hamropatro.com/rashifal";
-  } else if (type === "weekly") {
-    url = "https://www.hamropatro.com/rashifal/weekly";
-  } else if (type === "monthly") {
-    url = "https://www.hamropatro.com/rashifal/monthly";
-  } else if (type === "yearly") {
-    url = "https://www.hamropatro.com/rashifal/yearly";
-  } else {
-    throw new Error(
-      "Invalid horoscope type. Use daily, weekly, monthly, or yearly."
-    );
-  }
-
+async function getRashifal(type = "daily") {
+  if (!PATHS[type]) throw new Error("Invalid horoscope type. Use daily, weekly, monthly, or yearly.");
   try {
-    const { data } = await axios.get(url);
-    const $ = cheerio.load(data);
-
-    const descElements = $(".desc p");
+    const $ = cheerio.load(await fetchPage(PATHS[type]));
     const results = [];
-
-    descElements.each((index, element) => {
-      if (index < rashiNames.length) {
+    $("main a[href^='/rashifal/']")
+      .filter((_, element) => $(element).find("p").length >= 2)
+      .each((index, element) => {
+        const card = $(element);
+        const labels = card.find("div").first().children("span");
+        const paragraphs = card.children("p");
+        const imagePath = card.find("span[style*='mask-image']").attr("style")?.match(/url\(([^)]+)\)/)?.[1];
         results.push({
           rashi: index + 1,
-          name: rashiNames[index],
-          text: $(element).text().trim(),
-          image: `https://www.hamropatro.com/images/dummy/ic_sodiac_${
-            index + 1
-          }.png`,
+          name: cleanText(labels.eq(1).text()),
+          nameEn: cleanText(labels.eq(2).text()),
+          syllables: cleanText(paragraphs.eq(0).text()),
+          text: cleanText(paragraphs.eq(1).text()),
+          image: imagePath ? new URL(imagePath, "https://www.hamropatro.com").href : "",
         });
-      }
-    });
-
+      });
+    if (results.length !== 12) throw new Error(`Expected 12 horoscope signs, found ${results.length}`);
     return results;
   } catch (error) {
-    throw new Error(
-      `Failed to retrieve the horoscope. Error: ${error.message}`
-    );
+    throw new Error(`Failed to retrieve the horoscope: ${error.message}`);
   }
-};
+}
 
 module.exports = getRashifal;

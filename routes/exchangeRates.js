@@ -1,42 +1,29 @@
-const axios = require("axios");
+"use strict";
+
 const cheerio = require("cheerio");
+const { cleanText, fetchPage } = require("./scraperUtils");
 
-const url = "https://www.hamropatro.com/forex";
-
-const getExchangeRates = async () => {
+async function getExchangeRates() {
   try {
-    const { data } = await axios.get(url);
-    const $ = cheerio.load(data);
-
-    const forexTexts = [];
-    $("ul.forex > li").each((i, elem) => {
-      forexTexts.push($(elem).text().trim());
-    });
-
-    forexTexts.splice(0, 3);
-
+    const $ = cheerio.load(await fetchPage("/forex"));
     const exchangeRates = [];
-    for (let i = 0; i < forexTexts.length; i += 3) {
-      const currency = forexTexts[i];
-      const buyRate = forexTexts[i + 1];
-      const sellRate = forexTexts[i + 2];
+    $("main table tbody tr").each((index, row) => {
+      const cells = $(row).children("td");
+      if (cells.length < 3) return;
+      const labels = cells.eq(0).find("div").filter((_, element) => $(element).children().length === 0);
       exchangeRates.push({
-        id: i / 3 + 1,
-        currency: currency,
-        buyRate: buyRate,
-        sellRate: sellRate,
+        id: index + 1,
+        code: cleanText(labels.eq(0).text()),
+        currency: cleanText(labels.eq(1).text()),
+        buyRate: cleanText(cells.eq(1).text()),
+        sellRate: cleanText(cells.eq(2).text()),
       });
-    }
-
-    const result = {
-      exchangeRates: exchangeRates,
-    };
-
-    return result;
+    });
+    if (!exchangeRates.length) throw new Error("Exchange-rate table was not found");
+    return { exchangeRates };
   } catch (error) {
-    console.error("Error fetching the page:", error);
-    throw error;
+    throw new Error(`Failed to scrape exchange rates: ${error.message}`);
   }
-};
+}
 
 module.exports = getExchangeRates;

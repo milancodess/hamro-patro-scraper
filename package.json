@@ -7,7 +7,7 @@
     "HamroPatro": "./cli.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,8 @@
     "nepali calendar",
     "nepali date",
     "nepali time",
+    "date converter",
+    "bikram sambat converter",
     "nepali rashifal",
     "nepali gold rate",
     "nepali silver rate",

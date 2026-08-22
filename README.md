@@ -1,6 +1,15 @@
 # hamro-patro-scraper
 
-`hamro-patro-scraper` is an npm package for scraping Nepali date, time, daily horoscope, gold prices, and exchange rates from [Hamro Patro](https://www.hamropatro.com/). It provides a simple API for retrieving this information programmatically or via a command-line interface.
+`hamro-patro-scraper` scrapes Nepali date/time, horoscope, gold prices, and exchange rates from [Hamro Patro](https://www.hamropatro.com/). It also includes an offline Gregorian (AD) and Bikram Sambat (BS) date converter and a terminal-friendly Nepali monthly calendar.
+
+## Features
+
+- Current Nepali date and Kathmandu time
+- Daily, weekly, monthly, and yearly Rashifal
+- Gold and silver prices
+- Foreign exchange rates
+- Offline AD ↔ BS date conversion
+- BS monthly calendar grids with Nepali digits
 
 ## Installation
 
@@ -52,6 +61,38 @@ Once installed globally, you can use the CLI to fetch Nepali date/time, daily ho
   HamroPatro forex
   ```
 
+- **Convert Dates:**
+
+  ```bash
+  HamroPatro convert ad-bs 2023-04-14
+  HamroPatro convert bs-ad 2080-01-01
+  HamroPatro convert bs-ad २०८०/०१/०१
+  ```
+
+- **Print a Nepali Calendar:**
+
+  ```bash
+  # Current BS month with today's date in the heading
+  HamroPatro calendar
+
+  # A specific BS year and month: calendar YEAR MONTH
+  HamroPatro calendar 2076 12
+
+  # Include a selected date in the heading: calendar YEAR MONTH DAY
+  HamroPatro calendar 2076 12 11
+
+  # Nepali digit arguments also work
+  HamroPatro calendar २०७६ १२ ११
+  ```
+
+  When running directly from the cloned repository, replace `HamroPatro` with `node cli.js`:
+
+  ```bash
+  node cli.js calendar 2076 12 11
+  ```
+
+  BS months are numbered `1` through `12`, from Baisakh through Chaitra.
+
 ### Using in Node.js Code
 
 You can also use `hamro-patro-scraper` in your Node.js applications. Here’s how:
@@ -64,6 +105,10 @@ You can also use `hamro-patro-scraper` in your Node.js applications. Here’s ho
      getRashifal,
      getGoldPrices,
      getExchangeRates,
+     adToBs,
+     bsToAd,
+     getBsCalendar,
+     formatBsCalendar,
    } = require("hamro-patro-scraper");
    ```
 
@@ -134,6 +179,39 @@ You can also use `hamro-patro-scraper` in your Node.js applications. Here’s ho
 })();
 ```
 
+6. **Convert AD and BS Dates:**
+
+```javascript
+const { adToBs, bsToAd } = require("hamro-patro-scraper");
+
+console.log(adToBs("2023-04-14"));
+// { year: 2080, month: 1, day: 1, formatted: "2080-01-01", ... }
+
+console.log(bsToAd("२०८०/०१/०१"));
+// { year: 2023, month: 4, day: 14, formatted: "2023-04-14", ... }
+```
+
+7. **Build or Format a BS Monthly Calendar:**
+
+```javascript
+const { getBsCalendar, formatBsCalendar } = require("hamro-patro-scraper");
+
+const calendar = getBsCalendar(2076, 12, 11);
+console.log(calendar.weeks); // Seven-column weeks containing dates or nulls
+console.log(formatBsCalendar(2076, 12, 11));
+```
+
+```text
+चैत ११, २०७६
+Su Mo Tu We Th Fr Sa
+                   १
+ २  ३  ४  ५  ६  ७  ८
+ ९ १० ११ १२ १३ १४ १५
+१६ १७ १८ १९ २० २१ २२
+२३ २४ २५ २६ २७ २८ २९
+३०
+```
+
 ## API
 
 ### `hamroPatro()`
@@ -154,11 +232,25 @@ Returns an array of horoscope objects with the following properties for each ras
 
 ### `getGoldPrices()`
 
-Logs the gold and silver prices directly to the console.
+Returns the page title, update time, description, and a `goldPrices` array. Each price contains `item`, `unit`, `price`, `change`, and `changePercent`.
 
 ### `getExchangeRates()`
 
-Logs the exchange rates directly to the console.
+Returns an `exchangeRates` array containing `code`, Nepali `currency` name, `buyRate`, and `sellRate` for each currency.
+
+### `adToBs(date)` / `bsToAd(date)`
+
+Converts a `YYYY-MM-DD` string and returns numeric `year`, `month`, `day`, and `weekday` values plus `formatted`, English/Nepali weekday names, and BS month names where applicable. You can also pass separate numeric arguments, such as `adToBs(2023, 4, 14)`. BS strings accept Nepali digits and separators such as `/`, `.`, commas, and spaces.
+
+The embedded calendar supports BS `1975-01-01` through `2099-12-30`, starting at AD `1918-04-13`. The exact final AD date is available as `dateConverter.maxAd`. Invalid or unsupported dates throw a descriptive error. Conversion is offline and uses UTC arithmetic, so results are timezone-safe.
+
+### `getBsCalendar(year, month, selectedDay?)`
+
+Returns structured details for a BS month, including its Nepali/English name, number of days, starting weekday, and `weeks`. Each week contains seven Sunday-to-Saturday values; blank positions are represented by `null`.
+
+### `formatBsCalendar(year, month, selectedDay?)`
+
+Returns the terminal-friendly calendar grid as a string with Nepali digits. The optional day is included in the heading. Both calendar functions accept English or Nepali numeric input.
 
 ## License
 

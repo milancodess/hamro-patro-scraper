@@ -1,49 +1,39 @@
-const axios = require("axios");
+"use strict";
+
 const cheerio = require("cheerio");
+const { cleanText, fetchPage } = require("./scraperUtils");
 
-const url = "https://www.hamropatro.com/gold";
-
-const getGoldPrices = async () => {
+async function getGoldPrices() {
   try {
-    const { data } = await axios.get(url);
-    const $ = cheerio.load(data);
-
-    const articleTitle = $("h2.articleTitle span").text();
-    const updatedAt = $("p > b").text();
-    const desText = $("p.des_text").text();
-
-    const goldSilverTexts = [];
-    $("ul.gold-silver > li").each((i, elem) => {
-      goldSilverTexts.push($(elem).text().trim());
-    });
-
+    const $ = cheerio.load(await fetchPage("/gold"));
     const goldPrices = [];
-    for (let i = 0; i < goldSilverTexts.length; i += 2) {
-      if (i + 1 < goldSilverTexts.length) {
-        goldPrices.push({
-          id: i / 2 + 1,
-          price: `${goldSilverTexts[i]} - ${goldSilverTexts[i + 1]}`,
-        });
-      } else {
-        goldPrices.push({
-          id: i / 2 + 1,
-          price: goldSilverTexts[i],
-        });
-      }
-    }
+    $("main li:has(canvas[aria-label$=' trend'])").each((index, element) => {
+      const content = $(element).children("div").first();
+      const header = content.children("div").first();
+      const labels = header.children("div").first().children("span").eq(1).children("span");
+      const paragraphs = content.children("p");
+      goldPrices.push({
+        id: index + 1,
+        item: cleanText(labels.eq(0).text()),
+        unit: cleanText(labels.eq(1).text()),
+        changePercent: cleanText(header.children("span").last().text()),
+        price: cleanText(paragraphs.eq(0).text()),
+        change: cleanText(paragraphs.eq(1).text()),
+      });
+    });
+    if (!goldPrices.length) throw new Error("Gold and silver price cards were not found");
 
-    const result = {
-      title: articleTitle,
-      updatedAt: updatedAt,
-      description: desText,
-      goldPrices: goldPrices,
+    const heading = $("h2").filter((_, element) => cleanText($(element).text()) === "Nepali Gold & Silver Price").first();
+    const mainText = cleanText($("main").text());
+    return {
+      title: cleanText($("main h1").first().text()),
+      updatedAt: mainText.match(/Last updated:\s*(.+?)Gold \(Hallmark\)/)?.[1]?.trim() || "",
+      description: cleanText(heading.parent().find("p").first().text()),
+      goldPrices,
     };
-
-    return result;
   } catch (error) {
-    console.error("Error fetching the page:", error);
-    throw error;
+    throw new Error(`Failed to scrape gold and silver prices: ${error.message}`);
   }
-};
+}
 
 module.exports = getGoldPrices;
