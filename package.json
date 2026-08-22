@@ -30,7 +30,20 @@
     "nepali exchange rate"
   ],
   "author": "Milan Bhandari",
-  "license": "Apache",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=20.18.1"
+  },
+  "files": [
+    "cli.js",
+    "index.js",
+    "routes",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "bugs": {
     "url": "https://github.com/milancodess/hamro-patro-scraper/issues"
   },
