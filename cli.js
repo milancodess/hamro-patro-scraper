@@ -46,7 +46,7 @@ const arg = args[0];
       case "convert": {
         const [direction, date] = args;
         if (!date || !["ad-bs", "bs-ad"].includes(direction)) {
-          throw new Error("Usage: HamroPatro convert <ad-bs|bs-ad> <YYYY-MM-DD>");
+          throw new Error("Usage: hamropatro convert <ad-bs|bs-ad> <YYYY-MM-DD>");
         }
         const result = direction === "ad-bs" ? adToBs(date) : bsToAd(date);
         console.log(JSON.stringify(result, null, 2));
@@ -62,7 +62,7 @@ const arg = args[0];
           month = currentBs.month;
           selectedDay = currentBs.day;
         } else if (year == null || month == null) {
-          throw new Error("Usage: HamroPatro calendar <BS_YEAR> <BS_MONTH> [DAY]");
+          throw new Error("Usage: hamropatro calendar <BS_YEAR> <BS_MONTH> [DAY]");
         }
         console.log(formatBsCalendar(year, month, selectedDay));
         break;

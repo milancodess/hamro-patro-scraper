@@ -4,7 +4,7 @@
   "description": "A package to scrape Nepali date, time, daily horoscope, gold and silver rates and exchange rates from Hamro Patro.",
   "main": "index.js",
   "bin": {
-    "HamroPatro": "./cli.js"
+    "hamropatro": "./cli.js"
   },
   "scripts": {
     "test": "node --test"

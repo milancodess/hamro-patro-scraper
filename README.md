@@ -40,52 +40,52 @@ Once installed globally, you can use the CLI to fetch Nepali date/time, daily ho
 - **Fetch Nepali Date and Time:**
 
   ```bash
-  HamroPatro datetime
+  hamropatro datetime
   ```
 
 - **Fetch Daily, Weekly, Monthly, Yearly Rashifal:**
 
   ```bash
-  HamroPatro rashifal (daily | weekly | monthly | yearly)
+  hamropatro rashifal (daily | weekly | monthly | yearly)
   ```
 
 - **Fetch Gold Prices:**
 
   ```bash
-  HamroPatro gold
+  hamropatro gold
   ```
 
 - **Fetch Exchange Rates:**
 
   ```bash
-  HamroPatro forex
+  hamropatro forex
   ```
 
 - **Convert Dates:**
 
   ```bash
-  HamroPatro convert ad-bs 2023-04-14
-  HamroPatro convert bs-ad 2080-01-01
-  HamroPatro convert bs-ad २०८०/०१/०१
+  hamropatro convert ad-bs 2023-04-14
+  hamropatro convert bs-ad 2080-01-01
+  hamropatro convert bs-ad २०८०/०१/०१
   ```
 
 - **Print a Nepali Calendar:**
 
   ```bash
   # Current BS month with today's date in the heading
-  HamroPatro calendar
+  hamropatro calendar
 
   # A specific BS year and month: calendar YEAR MONTH
-  HamroPatro calendar 2076 12
+  hamropatro calendar 2076 12
 
   # Include a selected date in the heading: calendar YEAR MONTH DAY
-  HamroPatro calendar 2076 12 11
+  hamropatro calendar 2076 12 11
 
   # Nepali digit arguments also work
-  HamroPatro calendar २०७६ १२ ११
+  hamropatro calendar २०७६ १२ ११
   ```
 
-  When running directly from the cloned repository, replace `HamroPatro` with `node cli.js`:
+  When running directly from the cloned repository, replace `hamropatro` with `node cli.js`:
 
   ```bash
   node cli.js calendar 2076 12 11
